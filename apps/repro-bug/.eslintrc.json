@@ -1,0 +1,15 @@
+{
+  "extends": ["../../../.eslintrc.back.json"],
+  "ignorePatterns": ["!**/*", "**/node_modules", "node_modules/"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["apps/cloud/shift-offer/tsconfig.*?.json"]
+      },
+      "rules": {
+        "@nx/enforce-module-boundaries": 0
+      }
+    }
+  ]
+}

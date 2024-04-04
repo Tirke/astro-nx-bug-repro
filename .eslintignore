@@ -1,1 +1,7 @@
-node_modules
+**/dist
+**/node_modules
+**/documentation
+**/prisma
+**/Pulumi.*.yaml
+**/jest.*.ts
+**/apps/front/**/public/*

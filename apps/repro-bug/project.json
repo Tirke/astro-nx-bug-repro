@@ -1,0 +1,16 @@
+{
+  "name": "shift-offer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/cloud/shift-offer/lambdas",
+  "projectType": "application",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/cloud/shift-offer"],
+      "options": {
+        "jestConfig": "apps/cloud/shift-offer/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

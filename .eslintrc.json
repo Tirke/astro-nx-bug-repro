@@ -1,19 +1,22 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "**/*"
-  ],
-  "plugins": [
-    "@nx"
-  ],
+  "plugins": ["@nx", "import", "jest"],
+  "extends": ["plugin:storybook/recommended"],
+  "env": {
+    "jest": true,
+    "node": true
+  },
+  "rules": {
+    "storybook/no-uninstalled-addons": [
+      "error",
+      {
+        "ignore": ["@nx/react/plugins/storybook"]
+      }
+    ]
+  },
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nx/enforce-module-boundaries": [
           "error",
@@ -23,45 +26,96 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
+                "onlyDependOnLibsWithTags": ["*"]
               }
             ]
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "newlines-between": "always",
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              ["parent", "index"],
+              "sibling"
+            ],
+            "alphabetize": {
+              "order": "asc"
+            },
+            "pathGroups": [
+              {
+                "pattern": "@nestjs/**",
+                "group": "external"
+              },
+              {
+                "pattern": "{@admin/**,@authentication/**,@featureToggles/**,@institution/**,@network/**,@mission/**,@notification/**,@shared/**,@talent/**,@worker/**,@contract/**,@config/**,@front/**}",
+                "group": "internal",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["builtin"]
           }
         ]
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
+      "files": ["*.ts", "*.tsx"],
       "extends": [
-        "plugin:@nx/typescript"
+        "plugin:@nx/typescript",
+        "plugin:import/typescript",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
       ],
-      "rules": {}
+      "rules": {
+        "curly": ["error", "all"],
+        "@typescript-eslint/adjacent-overload-signatures": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/member-delimiter-style": "off",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-misused-promises": 0,
+        "@typescript-eslint/no-floating-promises": [
+          "error",
+          {
+            "ignoreVoid": true
+          }
+        ],
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/no-import-type-side-effects": "error",
+        "import/no-unresolved": "off",
+        "import/no-duplicates": [
+          "error",
+          {
+            "considerQueryString": true,
+            "prefer-inline": true
+          }
+        ],
+        "no-console": [
+          "error",
+          {
+            "allow": ["warn", "error"]
+          }
+        ],
+        "no-return-await": "error",
+        "semi": ["error", "never"],
+        "prefer-const": "error"
+      }
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nx/javascript"
-      ],
-      "rules": {}
-    },
-    {
-      "files": [
-        "*.spec.ts",
-        "*.spec.tsx",
-        "*.spec.js",
-        "*.spec.jsx"
-      ],
-      "env": {
-        "jest": true
-      },
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
       "rules": {}
     }
   ]

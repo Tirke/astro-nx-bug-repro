@@ -1,0 +1,79 @@
+{
+  "extends": [
+    "plugin:@nx/react-typescript",
+    "next",
+    "next/core-web-vitals",
+    "plugin:jest-dom/recommended",
+    "./.eslintrc.json"
+  ],
+  "plugins": ["jest-dom"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          { "fixStyle": "inline-type-imports" }
+        ],
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "CallExpression[callee.object.name='localStorage']",
+            "message": "Do not use 'localStorage' directly, use useLocalStorage hook instead. You can disable the rule if you can't use a hook in your file (tests or interceptors for ex)"
+          },
+          {
+            "selector": "MemberExpression[object.name='window'][property.name='localStorage']",
+            "message": "Do not use 'localStorage' directly, use useLocalStorage hook instead. You can disable the rule if you can't use a hook in your file (tests or interceptors for ex)"
+          }
+        ],
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@hookform/resolvers/zod",
+                "importNames": ["zodResolver"],
+                "message": "Please use useFormResolver instead (it has a custom errorMap inside)."
+              }
+            ]
+          }
+        ],
+        "no-restricted-properties": [
+          2,
+          {
+            "object": "i18n",
+            "property": "changeLanguage",
+            "message": "This does not work in Nextjs. Please use Link or router instead. See https://nextjs.org/docs/advanced-features/i18n-routing#transition-between-locales"
+          }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "react/display-name": "off",
+        "react/prop-types": "off",
+        "jest/expect-expect": [
+          "error",
+          {
+            "assertFunctionNames": [
+              "expect",
+              "expect*",
+              "waitForElementToBeRemoved",
+              "screen.findBy*",
+              "result.findBy*"
+            ]
+          }
+        ],
+        "react/jsx-no-useless-fragment": [
+          "error",
+          { "allowExpressions": true }
+        ],
+        "jsx-a11y/anchor-is-valid": [
+          "error",
+          {
+            "components": ["Link"],
+            "specialLink": ["hrefLeft", "hrefRight"],
+            "aspects": ["invalidHref", "preferButton"]
+          }
+        ]
+      }
+    }
+  ]
+}
